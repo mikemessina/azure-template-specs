@@ -46,8 +46,6 @@ New-AzResourceGroupDeployment `
     -TemplateSpecId $specId `
     -TemplateParameterFile $parametersFile
 
-
-
 #Linked Template Deployment
 $linkedTemplate = './templates/azuredeploy.json'
 $linkedTemplateSpecName = 'linkedTemplateSpec'
