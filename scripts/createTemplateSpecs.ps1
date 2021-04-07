@@ -35,16 +35,23 @@ $specId = (Get-AzTemplateSpec `
         -Name $templateSpecName `
         -Version '1.0b').Versions.Id
 
-#Deployment using Template Specs
+#Deployment using Template SpecsId Reference
 New-AzResourceGroupDeployment `
     -ResourceGroupName $demoRG `
     -TemplateSpecId $specId
 
-#Deploy with Param File
+#Deploy Template SpecsId Reference with Param File
 New-AzResourceGroupDeployment `
     -ResourceGroupName $demoRG `
     -TemplateSpecId $specId `
-    -TemplateParameterFile $parametersFile
+    -TemplateParameterFile $parametersFile `
+    -Confirm
+
+#Deploy Main Template that uses a template spec.
+New-AzResourceGroupDeployment `
+    -ResourceGroupName $tsRgName `
+    -TemplateFile .\templates\main.json `
+    -Confirm
 
 #Linked Template Deployment
 $linkedTemplate = './templates/azuredeploy.json'
@@ -69,7 +76,8 @@ New-AzResourceGroupDeployment `
     -TemplateSpecId $linkedTsId `
     -ResourceGroupName $demoRG
 
-#Remove Resource Group when done
+
+<#  Remove Resource Groups when done
 Remove-AzResourceGroup `
     -Name $tsRgName `
     -Force
@@ -77,3 +85,4 @@ Remove-AzResourceGroup `
 Remove-AzResourceGroup `
     -Name $demoRG `
     -Force
+#>
