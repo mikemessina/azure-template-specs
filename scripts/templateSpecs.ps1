@@ -1,5 +1,5 @@
 ## Define Variables
-$subId = "subIdValue"
+
 $tsRgName = 'template_Specs-rg'
 $location = 'eastus2'
 $templateFile = './templates/storageacct.json'
@@ -8,9 +8,12 @@ $templateSpecName = 'storageSpec'
 $demoRG = 'ts_demo-rg'
 
 # Connect to correct subscription
+$subId = "subIdValue"
 Set-azcontext `
     -SubscriptionId $subId
 
+Get-AzResourceGroup -Name $tsRgName
+Get-AzResourceGroup -Name $demoRG
 # Create Resource Groups
 New-AzResourceGroup `
     -Name $tsRgName  `
@@ -34,7 +37,7 @@ New-AzTemplateSpec `
 $specId = (Get-AzTemplateSpec `
         -ResourceGroupName $tsRgName `
         -Name $templateSpecName `
-        -Version '1.0b').Versions.Id
+        -Version '1.0a').Versions.Id
 
 # Deployment using Template SpecsId Reference
 New-AzResourceGroupDeployment `
